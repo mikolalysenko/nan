@@ -30,7 +30,13 @@
 #define IOJS_2_0_MODULE_VERSION  44
 #define IOJS_3_0_MODULE_VERSION  45
 
-#if NODE_MODULE_VERSION >= IOJS_3_0_MODULE_VERSION && __cplusplus < 201103L
+#ifdef _MSC_VER
+# define NAN_HAS_CPLUSPLUS_11 (_MSC_VER >= 1800)
+#else
+# define NAN_HAS_CPLUSPLUS_11 (__cplusplus >= 201103L)
+#endif
+
+#if NODE_MODULE_VERSION >= IOJS_3_0_MODULE_VERSION && ! NAN_HAS_CPLUSPLUS_11
 # error This version of node/NAN/v8 requires a C++11 compiler
 #endif
 
